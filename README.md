@@ -35,7 +35,9 @@
 
 ## 举例说明
 ### 单文件下载模式
-**python3 downloader.py --mode=one --url=https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tar.xz**
+```
+$ python3 downloader.py --mode=one --url=https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tar.xz
+```
 + 结果如下：
 ```
 [+] 正在下载文件:Python-3.6.4rc1.tar.xz，临时文件目录:temp_a8566e
@@ -46,7 +48,9 @@
 ```
 + 下载时会显示下载进度:[+] 10/167 12.56% 0.13S/B 23S >=34S ; 分别表示:[+] 已下载数据块/总数据块 下载百分比 每一块下载所需时间 已用时间 预计下载完成需要时间
 + 下载未完成终止可通过指定临时文件目录继续下载:<br>
-**python3 downloader.py --mode=one --url=https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tar.xz --tfolder=temp_a8566e**
+```
+$ python3 downloader.py --mode=one --url=https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tar.xz --tfolder=temp_a8566e
+```
 
 + 该下载模式下必选参数有:mode, url; 可选参数有:tfolder, oworkers, block_size, size, name
 
@@ -59,21 +63,27 @@
 {"url": "https://www.python.org/ftp/python/3.7.0/Python-3.7.0a3.tgz"}
 {"url": "https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz"}
 ```
-**python3 downloader.py --mode=more --files=test.txt**
+```
+$ python3 downloader.py --mode=more --files=test.txt
+```
 
-+ 下载未完成终止可通过指定临时保存文件继续下载:<br>
-**python3 downloader.py --mode=more --tfile=temp_dc5505.txt**
++ 下载未完成终止可通过指定临时保存文件继续下载:
+```
+$ python3 downloader.py --mode=more --tfile=temp_dc5505.txt
+```
 
 + 该模式下的必选参数有:mode, files或tfile; 可选参数有:oworkers, fworkers, block_size
 
 ### 多文件分布式下载模式
 + 多文件分布式下载模式需要先将特定格式的下载文件json上传到redis数据库，然后进行下载，上传文件如下:
-
-**python3 downloader.py --mode=put --files=test.txt --key=test_download --host=host**
+```
+$ python3 downloader.py --mode=put --files=test.txt --key=test_download --host=host
+```
 
 + 然后进行分布式下载，只需要在不同的主机上执行下面命令即可:
-
-**python3 downloader.py --mode=redis --key=test_download --host=host**
+```
+$ python3 downloader.py --mode=redis --key=test_download --host=host
+```
 
 + 下载过程中每一个文件主机均会生成一个临时记录文件，若某一台主机中断下载，可用多文件下载模式下指定临时保存文件继续下载
 
@@ -81,12 +91,14 @@
 
 ### 单文件分布式下载模式
 + 单文件分布式下载模式下，先获取文件的大小，然后将数据块存储到redis中，不同主机同时下载，最后进行文件合成
-
-**python3 downloader.py --mode=one_redis --key=test_download --host=host**
+```
+$ python3 downloader.py --mode=one_redis --key=test_download --host=host
+```
 
 + 下载过程中会临时生成key+'_finished'键值保存已下载的数据块列表，用于中断后恢复下载
 + 中断后执行相同的命令或者指定tfolder参数即可继续下载
 + 下载完成了后将所有主机上下载的数据块复制到同一个文件夹内，数据块可能有重复下载，直接覆盖即可，然后进行文件合成
-
-**python3 downloader.py --mode=mix --name=Python-3.6.4rc1.tar.xz  --tfolder=temp_7ff138**
+```
+$ python3 downloader.py --mode=mix --name=Python-3.6.4rc1.tar.xz  --tfolder=temp_7ff138
+```
 + one_redis模式下必须参数:mode, key; 可选参数:oworkers, fworkers, block_size, host, port, db, password
