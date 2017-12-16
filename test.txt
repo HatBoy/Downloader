@@ -1,0 +1,6 @@
+{"url": "https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tar.xz"}
+{"url": "https://www.python.org/ftp/python/3.6.4/Python-3.6.4rc1.tgz"}
+{"url": "https://www.python.org/ftp/python/3.7.0/Python-3.7.0a3.tar.xz"}
+{"url": "https://www.python.org/ftp/python/3.7.0/Python-3.7.0a3.tgz"}
+{"url": "https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz"}
+{"url": "https://www.python.org/ftp/python/3.3.7/Python-3.3.7.tgz"}
