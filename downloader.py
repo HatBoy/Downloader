@@ -367,7 +367,7 @@ async def download_oneredis(url, size, key, host, port, db, password, block_size
 
 @click.command()
 @click.option('--mode', type=click.Choice(['one', 'more', 'put', 'redis', 'one_redis', 'mix']),
-              help='选择下载模式，共五种模式[one, more, put, redis, one_redis, mix]')
+              help='必选参数，选择下载模式，共五种模式[one, more, put, redis, one_redis, mix]')
 @click.option('--url', default=None, help='文件下载地址')
 @click.option('--oworkers', default=10, help='单个文件分块下载协程数，默认为10')
 @click.option('--block_size', default=1024 * 100, help='分块字节大小，默认为124*100字节')
@@ -384,7 +384,9 @@ async def download_oneredis(url, size, key, host, port, db, password, block_size
 @click.option('--password', default=None, help='分布式下载时redis密码，默认为None')
 def main(mode, url, block_size, oworkers, size, tfolder, name, files, fworkers, tfile, key, host, port, db, password):
     try:
-
+        if (not mode) or (mode not in ['one', 'more', 'put', 'redis', 'one_redis', 'mix']):
+            print('[ERROR] mode参数为必选参数')
+            exit(0)
         if tfolder and (not os.path.exists(tfolder)):
             print('[ERROR] {}目录不存在!'.format(tfolder))
             exit(0)
