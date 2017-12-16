@@ -370,14 +370,14 @@ async def download_oneredis(url, size, key, host, port, db, password, block_size
               help='必选参数，选择下载模式，共五种模式[one, more, put, redis, one_redis, mix]')
 @click.option('--url', default=None, help='文件下载地址')
 @click.option('--oworkers', default=10, help='单个文件分块下载协程数，默认为10')
-@click.option('--block_size', default=1024 * 100, help='分块字节大小，默认为124*100字节')
+@click.option('--block_size', default=1024 * 100, help='分块字节大小，默认为124*100字节，100KB')
 @click.option('--size', type=int, default=None, help='下载文件总字节大小')
 @click.option('--tfolder', default=None, help='文件下载临时目录')
 @click.option('--name', default=None, help='指定下载文件保存名')
 @click.option('--files', default=None, help='多文件下载要下载的文件列表，格式为json')
 @click.option('--fworkers', default=10, help='多文件下载协程数，默认为10')
 @click.option('--tfile', default=None, help='多文件下载临时记录文件')
-@click.option('--key', default=None, help='分布式下载时redis键值')
+@click.option('--key', default=None, help='分布式下载时待下载文件列表redis键值')
 @click.option('--host', default='127.0.0.1', help='分布式下载时redis主机地址，默认为127.0.0.1')
 @click.option('--port', default=6379, type=int, help='分布式下载时redis端口，默认为6379')
 @click.option('--db', default=0, type=int, help='分布式下载时redis数据库，默认为0')
@@ -385,7 +385,7 @@ async def download_oneredis(url, size, key, host, port, db, password, block_size
 def main(mode, url, block_size, oworkers, size, tfolder, name, files, fworkers, tfile, key, host, port, db, password):
     try:
         if (not mode) or (mode not in ['one', 'more', 'put', 'redis', 'one_redis', 'mix']):
-            print('[ERROR] mode参数为必选参数')
+            print('[ERROR] mode参数为必选参数，请选择下载模式，共五种模式[one, more, put, redis, one_redis, mix]')
             exit(0)
         if tfolder and (not os.path.exists(tfolder)):
             print('[ERROR] {}目录不存在!'.format(tfolder))
