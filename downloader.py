@@ -116,7 +116,6 @@ def get_size(url):
         req = requests.get(url, headers={'Range': 'bytes=0-10'}, timeout=10)
         content_range = req.headers['Content-Range']
         size = int(content_range.split('/')[-1])
-        ALL_SIZES.append(size)
         return size
     except Exception as e:
         print(e)
@@ -193,6 +192,7 @@ async def download_one(url, block_size, one_workers, size, temp_folder, name):
             with open('error_urls.err', 'a', encoding='UTF-8') as f:
                 f.write(json.dumps(error_urls) + '\n')
             return
+    ALL_SIZES.append(size)
     if not name:
         name = url.split('/')[-1]
 
