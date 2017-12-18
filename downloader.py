@@ -60,6 +60,7 @@ def make_block(size, block_size=1024 * 100, temp_folder=None, is_continue=False)
         blocks = os.scandir('./' + temp_folder)
         block_names = [int(b.name.split('.')[0]) for b in blocks]
     rg = 0
+    ALL_SIZES.append(size)
     for i, r in enumerate(range(rg, size + 1, block_size)):
         if i in block_names:
             continue
@@ -192,7 +193,7 @@ async def download_one(url, block_size, one_workers, size, temp_folder, name):
             with open('error_urls.err', 'a', encoding='UTF-8') as f:
                 f.write(json.dumps(error_urls) + '\n')
             return
-    ALL_SIZES.append(size)
+
     if not name:
         name = url.split('/')[-1]
 
