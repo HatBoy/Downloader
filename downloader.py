@@ -216,7 +216,7 @@ async def worker_more(files_queues, block_size, one_workers):
 
 
 async def run_more(file_list, file_workers, block_size, one_workers):
-    """同事下载下载多个文件"""
+    """同时下载下载多个文件"""
     files_queues = Queue()
     await asyncio.wait([files_queues.put(i) for i in file_list])
     tasks = [asyncio.ensure_future(worker_more(files_queues, block_size, one_workers)) for i in range(file_workers)]
